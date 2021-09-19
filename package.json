@@ -10,11 +10,17 @@
   },
   "dependencies": {
     "next": "11.1.2",
+    "orbit-controls-es6": "^2.0.0",
+    "postprocessing": "^6.22.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "three": "^0.132.2",
+    "threejs-controls-es6": "^1.0.1",
+    "threejs-post-processing": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "file-loader": "^3.0.1"
   }
 }
