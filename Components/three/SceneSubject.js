@@ -1,12 +1,11 @@
 import * as THREE from 'three'
-import alphaTexture from '../assets/stripes_gradient.jpg';
+import alphaTexture from '../../public/assets/stripes_gradient.jpg';
 
 const SceneSubject = scene => {
     const group = new THREE.Group();
-
     const subjectGeometry = deformGeometry(new THREE.IcosahedronGeometry(10, 2));
-    
     const subjectMaterial = new THREE.MeshStandardMaterial({ color: "#000", transparent: true, side: THREE.DoubleSide, alphaTest: 0.5 });
+
     subjectMaterial.alphaMap = new THREE.TextureLoader().load(alphaTexture);
     subjectMaterial.alphaMap.magFilter = THREE.NearestFilter;
     subjectMaterial.alphaMap.wrapT = THREE.RepeatWrapping;

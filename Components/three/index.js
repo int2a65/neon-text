@@ -1,6 +1,6 @@
 import SceneManager from './SceneManager';
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+
 
 function createCanvas(containerElement) {
   const canvas = document.createElement('canvas');

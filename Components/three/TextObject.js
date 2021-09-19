@@ -9,18 +9,10 @@ const TextObject = scene => {
   var cube = new THREE.Mesh( geometry, material );
   
   // Add cube to Scene
-  //scene.add( cube );
   var loader = new THREE.FontLoader();
 
   loader.load('https://threejs.org/examples/fonts/droid/droid_serif_bold.typeface.json', function ( font ) { 
     setText("NEON ", new THREE.Vector3(0, 0, 10), font);
-    // // create cubes
-    // var geometry = new BoxGeometry( 1, 1, 1 );
-    // var material = new MeshBasicMaterial( { color: "#fff" } );
-    // var cube = new Mesh( geometry, material );
-
-    // // Add cube to Scene
-    // scene.add( cube );
 
   });
 
@@ -39,13 +31,6 @@ const TextObject = scene => {
       textGeo.computeBoundingBox();
       textGeo.computeVertexNormals();
       textGeo.center();
-    
-      // var textMesh = new THREE.Mesh(textGeo, new THREE.MeshStandardMaterial({
-      //   color: Math.random() * 0xFFFFFF
-      // }));
-      // textMesh.position.copy(position); 
-      
-      // scene.add(textMesh);
 
       var material = new MeshBasicMaterial( { color: "#fff" } );
       var textMesh = new Mesh( textGeo, material );
@@ -55,7 +40,7 @@ const TextObject = scene => {
     }
 
     function update(time) {
-      
+
     }
 
     return {
