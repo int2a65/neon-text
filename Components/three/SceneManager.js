@@ -7,6 +7,7 @@ import { UnrealBloomPass, FXAAShader } from  "threejs-post-processing"
 import { Vector2, Color, Scene, WebGLRenderer, PerspectiveCamera, Clock } from 'three';
 import { OrbitControls } from 'threejs-controls-es6';
 
+
 function buildScene() {
   const scene = new Scene();
   scene.background = new Color( 0x000000 );
@@ -36,13 +37,13 @@ function buildCamera({ width, height }) {
   return camera;
 }
 
-export default function SceneManager(canvas) {
+export default function SceneManager(canvas, gui) {
   function update() {
     const elapsedTime = clock.getElapsedTime();
-    
+
      renderer.render(scene, camera);
      composer.render(clock.getDelta());
-
+     controls.update();
   }
 
   function onWindowResize() {
@@ -65,13 +66,29 @@ export default function SceneManager(canvas) {
   const scene = buildScene();
   const renderer = buildRender({...screenDimensions, canvas});
   const camera = buildCamera(screenDimensions);
-  const sceneSubjects = createSceneSubjects(scene);
 
-  // post-processing
+  const parameters = {
+    inputText: 'Neon'
+  }
+
+  const textGui = gui.add(parameters, 'inputText')
+
+  textGui.onChange(function (value) {
+    //Do something with the new value
+    controls.enabled = false;
+    scene.clear()
+    //remove old scene
+    createSceneSubjects(scene, parameters)
+  });
+  textGui.onFinishChange(function(value) {
+    controls.enabled = true;
+  })
+
+  const sceneSubjects = createSceneSubjects(scene, parameters);
+  // // post-processing
   var composer = new EffectComposer(renderer);
 
   composer.addPass(new RenderPass(scene, camera));
-
 
   var params = {
     exposure: 1,
@@ -89,20 +106,22 @@ export default function SceneManager(canvas) {
 
   composer.addPass(effectFXAA);
   composer.addPass(bloomPass);
-  
-  // controls
-  let controls = new OrbitControls( camera, renderer.domElement );
 
+  // controls - somehow it causes dat.gui onChange return same value
+  // upgrade OrbitControls not fixing the issue
+  // The solution is disable OrbitControls when editing dat.gui text input.
+  // enable OrbitControls when input is done
+  const controls = new OrbitControls( camera, renderer.domElement );
   controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
   controls.dampingFactor = 0.25;
   controls.screenSpacePanning = false;
 
   controls.maxPolarAngle = Math.PI / 2;
 
-  function createSceneSubjects(scene) {
+  function createSceneSubjects(scene, parameters) {
       const sceneSubjects = [
           new GeneralLights(scene),
-          new TextObject(scene)
+          new TextObject(scene, parameters.inputText)
       ];
 
       return sceneSubjects;

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
 
-const TextObject = scene => {
+const TextObject = (scene, inputText) => {
   // create text texture from threejs
   //https://github.com/webpack/webpack/issues/6586
   var geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -12,7 +12,7 @@ const TextObject = scene => {
   var loader = new THREE.FontLoader();
 
   loader.load('https://threejs.org/examples/fonts/droid/droid_serif_bold.typeface.json', function ( font ) { 
-    setText("NEON ", new THREE.Vector3(0, 0, 10), font);
+    setText(inputText, new THREE.Vector3(0, 0, 10), font);
 
   });
 

@@ -1,7 +1,6 @@
 import SceneManager from './SceneManager';
 import React, { Component } from 'react';
 
-
 function createCanvas(containerElement) {
   const canvas = document.createElement('canvas');
   containerElement.appendChild(canvas);
@@ -21,22 +20,25 @@ function resizeCanvas(props) {
 
 
 export const Main = containerElement => {
+  initGui().then((gui) => {
+    const canvas = createCanvas(containerElement);
+    const sceneManager = new SceneManager(canvas, gui);
 
-  function render() {
-    requestAnimationFrame(render);
-    sceneManager.update();
-  }
+    function render() {
+      requestAnimationFrame(render);
+      sceneManager.update();
+    }
+    bindEventListeners({canvas, sceneManager});
+    render();
 
-  const canvas = createCanvas(containerElement);
-  const sceneManager = new SceneManager(canvas);
- 
-  bindEventListeners({canvas, sceneManager});
-  render();
-
+  })
 }
-
+const initGui = async () => {
+  const dat = await import('dat.gui')
+  return new dat.GUI()
+}
 export default class App extends Component {
-  componentDidMount() { 
+  componentDidMount() {
     Main(this.threeRootElement);
   }
   render () {

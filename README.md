@@ -18,6 +18,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Or visit here https://neon-text-2-anfp52fvb-selecafs.vercel.app/
+Or visit here https://neon-text-hsy1erarf-int2a65.vercel.app
 
 ![Screenshot](https://raw.githubusercontent.com/int2a65/neon-text/main/public/assets/screenshot.png?token=ALPVBQF6IGSYA5ES4EZ66NDBJ665E)
