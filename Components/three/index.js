@@ -8,13 +8,12 @@ function createCanvas(containerElement) {
 }
 
 function bindEventListeners(props) {
-  window.onresize = resizeCanvas;
-  resizeCanvas(props);
+  window.onresize = resizeCanvas.bind(null, props);
 }
 
 function resizeCanvas(props) {
   const { sceneManager } = props
-
+console.log('sceneManager', sceneManager)
   sceneManager.onWindowResize();
 }
 
