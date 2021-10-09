@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
+import { MeshBasicMaterial, Mesh } from 'three';
 
-const TextObject = (scene, inputText) => {
+const TextObject = (scene, parameters) => {
   // create text texture from threejs
   //https://github.com/webpack/webpack/issues/6586
   var geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -12,12 +12,12 @@ const TextObject = (scene, inputText) => {
   var loader = new THREE.FontLoader();
 
   loader.load('https://threejs.org/examples/fonts/droid/droid_serif_bold.typeface.json', function ( font ) { 
-    setText(inputText, new THREE.Vector3(0, 0, 10), font);
+    setText(parameters.inputText, new THREE.Vector3(0, 0, 10), font, parameters.color);
 
   });
 
 
-  function setText(text, position, font) {
+  function setText(text, position, font, color) {
     var textGeo = new THREE.TextGeometry(text, {
         font: font,
         size: 3,
@@ -32,7 +32,7 @@ const TextObject = (scene, inputText) => {
       textGeo.computeVertexNormals();
       textGeo.center();
 
-      var material = new MeshBasicMaterial( { color: "#fff" } );
+      var material = new MeshBasicMaterial( { color: color || "#fff" } );
       var textMesh = new Mesh( textGeo, material );
   
       // Add cube to Scene

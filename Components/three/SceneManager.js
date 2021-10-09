@@ -68,19 +68,35 @@ export default function SceneManager(canvas, gui) {
   const camera = buildCamera(screenDimensions);
 
   const parameters = {
-    inputText: 'Neon'
+    inputText: 'Neon',
+    color: '#8eeded'
   }
 
   const textGui = gui.add(parameters, 'inputText')
+  // GUI controls color
+  const colorGui = gui
+    .addColor(parameters, "color")
+  
+  colorGui
+    .onChange(function() {
+      //Do something with the new value
+      controls.enabled = false;
+      scene.clear()
+      //remove old scene
+      createSceneSubjects(scene, parameters)
+    });
+    colorGui.onFinishChange(function(value) {
+      controls.enabled = true;
+    })
 
-  textGui.onChange(function (value) {
+  textGui.onChange(function () {
     //Do something with the new value
     controls.enabled = false;
     scene.clear()
     //remove old scene
     createSceneSubjects(scene, parameters)
   });
-  textGui.onFinishChange(function(value) {
+  textGui.onFinishChange(function() {
     controls.enabled = true;
   })
 
@@ -121,7 +137,7 @@ export default function SceneManager(canvas, gui) {
   function createSceneSubjects(scene, parameters) {
       const sceneSubjects = [
           new GeneralLights(scene),
-          new TextObject(scene, parameters.inputText)
+          new TextObject(scene, parameters)
       ];
 
       return sceneSubjects;
